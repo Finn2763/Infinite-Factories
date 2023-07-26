@@ -189,7 +189,7 @@ while running: # Game Loop
         shop3show = True
 
     text("pointsText", "Points: " + str(notate(points)), 100, 100, 1)
-    text("speedText", "Generation: " + str(generation), 100, 150, 0)
+    text("speedText", "Generation: " + str(notate(generation)), 100, 150, 0)
     text("fpsText", "FPS: " + str(math.floor(smoothfps)), 25, 25, 0)
 
     text("shop1Text", "Tier I Factory", 120, 205, 1)
