@@ -332,7 +332,7 @@ while running: # Game Loop
     text("newsText", currentNews, 25, 50, 0)
     text("creditText", "Music by Cursedsnake", 25, pygame.display.get_window_size()[1]-50, 0)
 
-    generation = (shop1 + (shop2*20) + (shop3*400) + (shop4*8000))
+    generation = (shop1 + (shop2*20) + (shop3*400) + (shop4*8000) + (shop5*160000) + (shop6*3200000) + (shop7*64000000) + (shop8*1280000000))
 
     newss = len(news)
     news[17] = "{} total news messages".format(newss)
