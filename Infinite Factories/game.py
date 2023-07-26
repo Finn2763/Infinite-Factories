@@ -7,6 +7,15 @@ import random
 import os
 pygame.init()
 
+displayInfo = pygame.display.Info()
+
+def change_window_size(existing_surface, new_width, new_height): # Code by ChatGPT
+    # Create a new display surface with the desired dimensions
+    new_surface = pygame.display.set_mode((new_width, new_height), pygame.SCALED)
+    
+    # Copy the content from the old surface to the new one
+    pygame.transform.scale(existing_surface, (new_width, new_height), new_surface)
+
 notation = ["", "K", "M", "B", "T", "Qu", "Qn", "Sx", "Sp", "O", "N", "De", "UDe", "DDe", "TDe", "QuDe", "QnDe", "SxDe", "SpDe", "ODe", "NDe", "Vg"]
 
 song_name = "goingfast.mp3"
@@ -16,7 +25,7 @@ pygame.mixer.music.load(song_path)
 pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(0.5)
 
-window = pygame.display.set_mode((1600, 900))
+window = pygame.display.set_mode((displayInfo.current_w*0.9, displayInfo.current_h*0.8), pygame.SCALED)
 pygame.display.set_caption("Infinite Factories")
 
 bgColor = (0, 16, 32)
@@ -33,10 +42,12 @@ shop3 = 0
 smoothfps = 60
 lasttime = round(time.time()/10)
 newss = 0
-news = ["220 Lines of Code!", "hi :)", "asdfghjkl!!!", "why are you here", "fard", 'what are you even making? what even is a "point"?', "eh", "i don't know", "ZeroDivisionError: division by zero", '"siiiaaaaaaiifbbbbbbbbbbbbbfgs[]]]]]]]]]];;;;;;;;;;zzzzzzzqqqqqqqqqqq" -my cat', "11th news message!", "Breaking news: Nobody still knows what a point is supposed to be.", "😎 nooo my emoji isn't working :(", "the next peice of news is a lie!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", "{} is a big number".format(points),"You matter! (unless you multiply yourself by c^2, then you energy)", "This sentence is false.", "{} total news messages".format(newss)]
+news = ["237 Lines of Code!", "hi :)", "asdfghjkl!!!", "why are you here", "fard", 'what are you even making? what even is a "point"?', "eh", "i don't know", "ZeroDivisionError: division by zero", '"siiiaaaaaaiifbbbbbbbbbbbbbfgs[]]]]]]]]]];;;;;;;;;;zzzzzzzqqqqqqqqqqq" -my cat', "11th news message!", "Breaking news: Nobody still knows what a point is supposed to be.", "😎 nooo my emoji isn't working :(", "the next peice of news is a lie!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", "{} is a big number".format(points),"You matter! (unless you multiply yourself by c^2, then you energy)", "This sentence is false.", "{} total news messages".format(newss)]
 currentNews = random.choice(news)
 shop2show = False
 shop3show = False
+lastf11 = False
+fullscreen = False
 
 def text(textname, text, xpos, ypos, size):
     if size == 1:
@@ -197,7 +208,7 @@ while running: # Game Loop
     text("shop1Price", "20 Points", 120, 260, 0)
 
     text("newsText", currentNews, 25, 50, 0)
-    text("creditText", "Music by Cursedsnake", 25, 850, 0)
+    text("creditText", "Music by Cursedsnake", 25, pygame.display.get_window_size()[1]-50, 0)
 
     generation = (shop1 + (shop2*20) + (shop3*400))
 
@@ -215,6 +226,12 @@ while running: # Game Loop
             write(4, shop3)
             running = False
 
-
+        if event.type == pygame.KEYDOWN:
+            if event.key == 1073741892:
+                change_window_size(window, displayInfo.current_w, displayInfo.current_h)
+                pygame.display.toggle_fullscreen()
+                fullscreen = not fullscreen
+                if fullscreen == False:
+                    change_window_size(window, displayInfo.current_w*0.9, displayInfo.current_h*0.8)
 
 pygame.quit()
