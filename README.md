@@ -1,5 +1,5 @@
 # Infinite-Factories
-A simple clicker game I'm working on
+A simple clicker game I'm working on made with Python and Pygame
 
 Music is "Going Fast!" by Cursedsnake; You can find their work at www.youtube.com/@Cursedsnake
 
