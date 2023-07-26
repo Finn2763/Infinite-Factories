@@ -7,6 +7,9 @@ import random
 import os
 pygame.init()
 
+def roundtonearest(rnd, number):
+    return round(number/rnd)*rnd
+
 displayInfo = pygame.display.Info()
 
 def change_window_size(existing_surface, new_width, new_height):
@@ -47,7 +50,7 @@ shop8 = 0
 smoothfps = 60
 lasttime = round(time.time()/10)
 newss = 0
-news = ["365 Lines of Code!", "hi :)", "asdfghjkl!!!", "why are you here", "fard", 'what are you even making? what even is a "point"?', "eh", "i don't know", "ZeroDivisionError: division by zero", '"siiiaaaaaaiifbbbbbbbbbbbbbfgs[]]]]]]]]]];;;;;;;;;;zzzzzzzqqqqqqqqqqq" -my cat', "11th news message!", "Breaking news: Nobody still knows what a point is supposed to be.", "😎 nooo my emoji isn't working :(", "the next peice of news is a lie!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", "{} is a big number".format(points),"You matter! (unless you multiply yourself by c^2, then you energy)", "This sentence is false.", "{} total news messages".format(newss)]
+news = ["430 Lines of Code!", "hi :)", "asdfghjkl!!!", "why are you here", "fard", 'what are you even making? what even is a "point"?', "eh", "i don't know", "ZeroDivisionError: division by zero", '"siiiaaaaaaiifbbbbbbbbbbbbbfgs[]]]]]]]]]];;;;;;;;;;zzzzzzzqqqqqqqqqqq" -my cat', "11th news message!", "Breaking news: Nobody still knows what a point is supposed to be.", "😎 nooo my emoji isn't working :(", "the next peice of news is a lie!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", "{} is a big number".format(points),"You matter! (unless you multiply yourself by c^2, then you energy)", "This sentence is false.", "{} total news messages".format(newss), "61726520796F75206C6F6F6B696E6720666F7220736563726574733F", "Each factory is 20x faster than the last"]
 currentNews = random.choice(news)
 shop2show = False
 shop3show = False
@@ -64,6 +67,13 @@ def text(textname, text, xpos, ypos, size):
         textname = gameFont.render(text, 1, (255,255,255))
     else:
         textname = smallFont.render(text, 1, (255,255,255))
+    window.blit(textname, (xpos, ypos))
+
+def colortext(textname, text, xpos, ypos, size, r, g, b):
+    if size == 1:
+        textname = gameFont.render(text, 1, (r,g,b))
+    else:
+        textname = smallFont.render(text, 1, (r,g,b))
     window.blit(textname, (xpos, ypos))
 
 def mouseinside(rect):
@@ -89,6 +99,7 @@ shopitem5 = pygame.Rect(600, 200, 500, 100)
 shopitem6 = pygame.Rect(600, 350, 500, 100)
 shopitem7 = pygame.Rect(600, 500, 500, 100)
 shopitem8 = pygame.Rect(600, 650, 500, 100)
+rebirthrect = pygame.Rect(600, 100, 500, 100)
 
 print("Loading Save...")
 
@@ -131,6 +142,7 @@ shop5 = int(read(6))
 shop6 = int(read(7))
 shop7 = int(read(8))
 shop8 = int(read(9))
+rebirth = float(read(10))
 
 print ("Have Fun!")
 
@@ -144,6 +156,8 @@ while running: # Game Loop
     lastframe = time.time()
     if fps != 0:
         smoothfps += (fps-smoothfps)/fps
+
+    rbprice = rebirth*100000000000000
 
     if pygame.mouse.get_pressed()[0]:
         if not lastmouse:
@@ -179,11 +193,31 @@ while running: # Game Loop
                 if points >= 1000000000:
                     points -= 1000000000
                     shop8+=1
+            elif mouseinside(rebirthrect):
+                if points >= rbprice:
+                    points = 20
+                    generation = 0
+                    shop1 = 0
+                    shop2 = 0
+                    shop3 = 0
+                    shop4 = 0
+                    shop5 = 0
+                    shop6 = 0
+                    shop7 = 0
+                    shop8 = 0
+                    shop2show = False
+                    shop3show = False
+                    shop4show = False
+                    shop5show = False
+                    shop6show = False
+                    shop7show = False
+                    shop8show = False
+                    rebirth += 0.1
             lastmouse = True
     else:
         lastmouse = False
 
-    points = points + (generation/10000)/(deltatime+0.01)
+    points = points + ((generation*rebirth)/10000)/(deltatime+0.01)
 
     window.fill(bgColor)
     if not mouseinside(shopitem1):
@@ -236,7 +270,7 @@ while running: # Game Loop
         pygame.draw.rect(window, (114, 147, 168), shopitem5, width=10)
 
         text("shop1Text", "Tier V Factory", 620, 205, 1)
-        text("shop1Amount", "x" + str(shop5), 745, 260, 0)
+        text("shop1Amount", "x" + str(shop5), 760, 260, 0)
         text("shop1Price", "15M Points", 620, 260, 0)
 
     if shop6show:
@@ -272,9 +306,22 @@ while running: # Game Loop
         pygame.draw.rect(window, (114, 147, 168), shopitem8, width=10)
 
         text("shop4Text", "Tier VIII Factory", 620, 655, 1)
-        text("shop4Amount", "x" + str(shop8), 760, 710, 0)
+        text("shop4Amount", "x" + str(shop8), 740, 710, 0)
         text("shop4Price", "1B Points", 620, 710, 0)
+    
+    if shop8 > 0:
+        if not mouseinside(rebirthrect):
+            pygame.draw.rect(window, (196, 189, 109), rebirthrect) 
+        else:
+            pygame.draw.rect(window, (99, 96, 0), rebirthrect)
 
+        pygame.draw.rect(window, (237, 228, 132), rebirthrect, width=10)
+
+        text("rebirthButtonText", "Rebirth", 620, 100, 1)
+        text("rebirthPrice", notate(rbprice) + "  x" + str(rebirth), 620, 155, 0)
+    else:
+        colortext("rebirthText", "Rebirths: " + str(notate(round(((rebirth-1)*10)+0.1))), 600, 100, 1, 237, 228, 132)
+        colortext("multiText", "Multiplier: " + "x" + str(round(rebirth, 1)), 600, 150, 0, 237, 228, 132)
     pygame.draw.rect(window, (114, 147, 168), shopitem1, width=10)
 
     if lasttime != round(time.time()/10):
@@ -291,6 +338,7 @@ while running: # Game Loop
         write(7, shop6)
         write(8, shop7)
         write(9, shop8)
+        write(10, rebirth)
         print("Game saved with {} points.".format(notate(points)))
 
     lasttime = round(time.time()/10)
@@ -320,9 +368,9 @@ while running: # Game Loop
 
     if points >= 100000000:
         shop8show = True
-
+    
     text("pointsText", "Points: " + str(notate(points)), 100, 100, 1)
-    text("speedText", "Generation: " + str(notate(generation)), 100, 150, 0)
+    text("speedText", "Generation: " + str(notate(round(generation*rebirth))), 100, 150, 0)
     text("fpsText", "FPS: " + str(math.floor(smoothfps)), 25, 25, 0)
 
     text("shop1Text", "Tier I Factory", 120, 205, 1)
@@ -335,6 +383,7 @@ while running: # Game Loop
     generation = (shop1 + (shop2*20) + (shop3*400) + (shop4*8000) + (shop5*160000) + (shop6*3200000) + (shop7*64000000) + (shop8*1280000000))
 
     newss = len(news)
+    
     news[17] = "{} total news messages".format(newss)
     news[14] = "{} is a big number".format(notate(points))
 
@@ -351,6 +400,7 @@ while running: # Game Loop
             write(7, shop6)
             write(8, shop7)
             write(9, shop8)
+            write(10, rebirth)
             print("Game saved with {} points.".format(notate(points)))
             running = False
 
@@ -361,5 +411,20 @@ while running: # Game Loop
                 fullscreen = not fullscreen
                 if fullscreen == False:
                     change_window_size(window, displayInfo.current_w*0.9, displayInfo.current_h*0.8)
-
+            if event.key == 27:
+                for i in range(1,4):
+                    write(i, "")
+                write(1, points)
+                write(2, shop1)
+                write(3, shop2)
+                write(4, shop3)
+                write(5, shop4)
+                write(6, shop5)
+                write(7, shop6)
+                write(8, shop7)
+                write(9, shop8)
+                write(10, rebirth)
+                print("Game saved with {} points.".format(notate(points)))
+                running = False
+                
 pygame.quit()
