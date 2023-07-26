@@ -20,8 +20,8 @@ window = pygame.display.set_mode((1600, 900))
 pygame.display.set_caption("Infinite Factories")
 
 bgColor = (0, 16, 32)
-gameFont = pygame.font.SysFont("Agency FB", 50)
-smallFont = pygame.font.SysFont("Agency FB", 25)
+gameFont = pygame.font.SysFont("lucidasans", 50)
+smallFont = pygame.font.SysFont("lucidasans", 25)
 
 points = 20
 fps = 60
@@ -153,7 +153,7 @@ while running: # Game Loop
         pygame.draw.rect(window, (114, 147, 168), shopitem2, width=10)
 
         text("shop2Text", "Tier II Factory", 120, 355, 1)
-        text("shop2Amount", "x" + str(shop2), 220, 410, 0)
+        text("shop2Amount", "x" + str(shop2), 260, 410, 0)
         text("shop2Price", "10K Points", 120, 410, 0)
 
     if shop3show:
@@ -165,7 +165,7 @@ while running: # Game Loop
         pygame.draw.rect(window, (114, 147, 168), shopitem3, width=10)
 
         text("shop3Text", "Tier III Factory", 120, 505, 1)
-        text("shop3Amount", "x" + str(shop3), 220, 560, 0)
+        text("shop3Amount", "x" + str(shop3), 280, 560, 0)
         text("shop3Price", "150K Points", 120, 560, 0)
     
     pygame.draw.rect(window, (114, 147, 168), shopitem1, width=10)
@@ -193,7 +193,7 @@ while running: # Game Loop
     text("fpsText", "FPS: " + str(math.floor(smoothfps)), 25, 25, 0)
 
     text("shop1Text", "Tier I Factory", 120, 205, 1)
-    text("shop1Amount", "x" + str(shop1), 220, 260, 0)
+    text("shop1Amount", "x" + str(shop1), 245, 260, 0)
     text("shop1Price", "20 Points", 120, 260, 0)
 
     text("newsText", currentNews, 25, 50, 0)
